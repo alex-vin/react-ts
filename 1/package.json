@@ -1,0 +1,29 @@
+{
+  "name": "react-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config build/webpack.common.js --mode production",
+    "start": "webpack-dev-server --config build/webpack.common.js --mode development --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-vin/react-ts.git"
+  },
+  "author": "alex-vin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alex-vin/react-ts/issues"
+  },
+  "homepage": "https://github.com/alex-vin/react-ts#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5"
+  }
+}
