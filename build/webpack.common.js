@@ -7,6 +7,16 @@ module.exports={
     filename: 'bundle.js',
     path: path.join(__dirname, '../dist')
   },
+  devServer: {
+    host: 'localhost',
+    port: 8080,
+    historyApiFallback: true,
+    overlay: {
+      errors: true //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
+    },
+    inline: true,
+    hot: true
+  },
   module: {
     rules: [{
         test: /\.js$/,

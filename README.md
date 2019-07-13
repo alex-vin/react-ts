@@ -27,8 +27,7 @@
 
 # 2.安装webpack  webpack-cli
 ```
-  yarn add webpack -D 或者 npm i webpack -D
-  yarn add webpack-cli -D 或者 npm i webpack-cli -D
+  npm install webpack webpack-cli -D
 ```
   webpack4将命令行相关的操作抽离到了webpack-cli中，比如init、migrate、serve等等。
   a). 安装完毕后在根目录新建 `build` 文件夹,并在build文件夹新建 `webpck.common.js` 文件，用来存放webpack公共配置。
@@ -128,3 +127,31 @@
       ]
     }
   ```
+
+# 5.安装 `webpack-dev-server` 搭建简易服务器
+```
+  npm i webpack-dev-server -D
+```
+  a). 修改 `webpack.common.js` 配置
+  ```
+    module.exports={
+      /* 忽略其他 */
+      devServer: {
+        host: 'localhost',
+        port: 8080,
+        historyApiFallback: true,
+        overlay: {
+          errors: true //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
+        },
+        inline: true,
+        hot: true
+      }
+    }
+  ```
+  详细信息查看<a href="https://webpack.js.org/configuration/dev-server/" target="_blank">devServer配置</a>
+  b). 在package.json 修改 “scripts”:
+  ```
+    "start": "webpack-dev-server --config build/webpack.common.js --mode development --open"
+  ```
+
+至此，运行 `npm run start` 即可打开 `http://localhost:8080`
