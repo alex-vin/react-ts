@@ -10,6 +10,7 @@
   npm install webpack webpack-cli -D
 ```
   webpack4将命令行相关的操作抽离到了webpack-cli中，比如init、migrate、serve等等。
+
   a). 安装完毕后在根目录新建 `build` 文件夹,并在build文件夹新建 `webpck.common.js` 文件，用来存放webpack公共配置。
   ```
     const path = require('path');
@@ -129,6 +130,7 @@
     }
   ```
   详细信息查看<a href="https://webpack.js.org/configuration/dev-server/" target="_blank">devServer配置</a>
+
   b). 在package.json 修改 “scripts”:
   ```
     "start": "webpack-dev-server --config build/webpack.common.js --mode development --open"
