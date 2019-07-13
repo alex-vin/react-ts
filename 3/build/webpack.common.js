@@ -32,7 +32,16 @@ module.exports={
         'style-loader',
         'css-loader',
         'postcss-loader',
-        'less-loader',
+        {
+          loader: 'less-loader',
+          options: {
+            javascriptEnabled: true,
+            modifyVars: {
+              'primary-color': 'black',
+              'border-radius-base': '10px'
+            }
+          }
+        },
         {
           loader: 'sass-resources-loader',
           options: {
@@ -40,7 +49,8 @@ module.exports={
           }
         }
       ],
-      exclude: path.join(__dirname, '../node_modules/')
+      include: [path.join(__dirname, '../node_modules/antd'), path.join(__dirname, '../src')],
+      // exclude: path.join(__dirname, '../node_modules/')
     }, {
       test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
       use: [{

@@ -2,6 +2,8 @@ import React from 'react'
 import { HashRouter as Router, Route, Link } from "react-router-dom"
 import loadable from '@loadable/component'
 
+import { Button } from 'antd';
+
 const HomeComponent = loadable(() => import(/* webpackChunkName: "home" */ '@pages/Home'))
 const AboutComponent = loadable(() => import(/* webpackChunkName: "about" */ '@pages/About'))
 
@@ -16,10 +18,10 @@ class App extends React.Component {
         <Router>
           <ul>
             <li>
-              <Link to="/">To Home</Link>
+              <Button><Link to="/">To Home</Link></Button>
             </li>
             <li>
-              <Link to="/about">To About</Link>
+              <Button><Link to="/about">To About</Link></Button>
             </li>
           </ul>
           <Route exact path='/' component={HomeComponent}></Route>

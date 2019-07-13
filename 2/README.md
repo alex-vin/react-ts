@@ -64,6 +64,7 @@
   ```
   `css-loader`            使你能够使用类似@import 和 url(...)的方法实现 require()的功能；
   `style-loader`          将所有的计算后的样式加入页面中； 与css-loader组合在一起使你能够把样式表嵌入webpack打包后的JS文件中。
+
   a). 在 `webpack.common.js` 中配置规则
   ```
     rules: [
@@ -122,6 +123,7 @@
   npm install less less-loader -D
 ```
 受控于公司镜像源问题，不推荐使用sass，因为还没找到安装`node-sass`的方法。
+
   a). 在`webpack.common.js`配置
   ```
     rules: [
@@ -156,6 +158,7 @@
   npm install sass-resources-loader -D
 ```
 sass-resources-loader不仅支持SASS，还支持LESS，POSTCSS等
+
   a). 新建 `src/assets/styles/common.less`
   ```
     @color-red: red;
@@ -195,6 +198,7 @@ sass-resources-loader不仅支持SASS，还支持LESS，POSTCSS等
   npm install postcss-loader autoprefixer -D
 ```
 autoprefixer 添加了 vendor 浏览器前缀
+
   a). 在根目录下新建postcss.config.js
   ```
     module.exports = {
@@ -212,8 +216,8 @@ autoprefixer 添加了 vendor 浏览器前缀
       use: [
         'style-loader',
         'css-loader',
-        'less-loader',
         'postcss-loader', // add it
+        'less-loader',
         {
           loader: 'sass-resources-loader',
           options: {
@@ -340,6 +344,7 @@ autoprefixer 添加了 vendor 浏览器前缀
   npm install @babel/preset-typescript @babel/plugin-proposal-class-properties @babel/plugin-proposal-decorators @babel/plugin-syntax-dynamic-import -D
 ```
 支持装饰器以及路由的动态引入。
+
   a). 修改 `babel.config.js`
   ```
     module.exports = {
@@ -417,7 +422,7 @@ autoprefixer 添加了 vendor 浏览器前缀
               <Route exact path='/' component={HomeComponent}></Route>
               <Route path='/about' component={AboutComponent}></Route>
             </Router>
-            <p className="aps">hahahaahhahhahahaha</p>
+            <p className="aps">talk is cheap, show me the code</p>
           </div>
         )
       }
@@ -425,4 +430,26 @@ autoprefixer 添加了 vendor 浏览器前缀
 
     export default App
   ```
+
+# 10. 配置别名 alias
+  a). 在 `webpack.common.js` `resolve`项下添加
+  ```
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      alias: {
+        '@': path.join(__dirname, '../src'),
+        '@pages': path.join(__dirname, '../src/pages'),
+        '@assets': path.join(__dirname, '../src/assets'),
+      },
+    },
+  ```
+  b). 修改 `tsconfig.json`
+  ```
+    "paths": {
+      "@": ["src/*"],
+      "@pages": ["src/pages/*"],
+      "@assets": ["src/assets/*"],
+    },
+  ```
+
   至此，所有配置就结束了
