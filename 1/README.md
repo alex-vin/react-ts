@@ -64,7 +64,7 @@
 
 # 4.React
 ```
-  npm install react react-dom -S
+  npm install react react-dom --S
 ```
   a). 修改 `src/index.js` 内容：
   ```
