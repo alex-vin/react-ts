@@ -78,9 +78,9 @@ const prodConfig = {
   plugins: [
     new CleanWebpackPlugin(),
     // 告诉 Webpack 使用了哪些动态链接库
-    // new webpack.DllReferencePlugin({
-    //   manifest: path.join(__dirname, `../dll/vendor.manifest.json`)
-    // }),
+    new webpack.DllReferencePlugin({
+      manifest: path.join(__dirname, `../dll/vendor.manifest.json`)
+    }),
     new BundleAnalyzerPlugin({ analyzerPort: 10001 }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -92,14 +92,14 @@ const prodConfig = {
         removeAttributeQuotes: true // 去掉一些属性的引号，例如id="moo" => id=moo
       }
     }),
-    // new AddAssetHtmlPlugin({
-    //   filepath: path.join(__dirname, '../dll/**/*.js'),
-    //   includeSourcemap: false
-    // }),
-    // new ScriptExtHtmlWebpackPlugin({
-    //   //`runtime` must same as runtimeChunk name. default is `runtime`
-    //   inline: /runtime\..*\.js$/
-    // }),
+    new AddAssetHtmlPlugin({
+      filepath: path.join(__dirname, '../dll/**/*.js'),
+      includeSourcemap: false
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      //`runtime` must same as runtimeChunk name. default is `runtime`
+      inline: /runtime\..*\.js$/
+    }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -108,4 +108,5 @@ const prodConfig = {
     }),
   ],
 }
-module.exports = smp.wrap(merge(baseConfig, prodConfig))
+// module.exports = smp.wrap(merge(baseConfig, prodConfig))
+module.exports = merge(baseConfig, prodConfig)

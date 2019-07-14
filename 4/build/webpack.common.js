@@ -1,8 +1,13 @@
+const os = require('os');
 const path = require('path');
 const webpack = require('webpack');
 const config = require('./config.js')
+const HappyPack = require('happypack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const chalk = require('chalk')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const argv = require('yargs-parser')(process.argv.slice(4))
 const APP_ENV = argv.env || 'env'
@@ -16,6 +21,10 @@ Object.assign(oriEnv, {
 const defineEnv = {}
 for (let key in oriEnv) {
   defineEnv[`process.env.${key}`] = JSON.stringify(oriEnv[key])
+}
+
+function createHappyPlugin(id, loaders) {
+  return new HappyPack({ id, loaders })
 }
 
 module.exports={
@@ -32,19 +41,25 @@ module.exports={
       errors: true //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
     },
     inline: true,
-    hot: true
+    hot: true,
+    quiet: true,
+    stats: "errors-only",
   },
   module: {
     rules: [{
       test: /\.(j|t)sx?$/,
-      use: [{
-        loader: 'babel-loader'
-      }],
+      use: ['happypack/loader?id=happy-babel-js'],
+      // use: [{
+      //   loader: 'babel-loader'
+      // }],
       include: path.join(__dirname, '../src'),
       // 排除node_modules底下的
       exclude: path.join(__dirname, '../node_modules/')
     }, {
       test: /\.css$/,
+      // use: config.extractCss ?
+      //   [MiniCssExtractPlugin.loader, 'happypack/loader?id=happy-css'] :
+      //   ['style-loader', 'happypack/loader?id=happy-css'],
       use: [
         config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader',
         {
@@ -59,7 +74,8 @@ module.exports={
     }, {
       test: /\.less$/,
       use: [
-        'style-loader',
+        // 'style-loader',
+        config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader',
         'css-loader',
         'postcss-loader',
         {
@@ -113,6 +129,27 @@ module.exports={
     },
   },
   plugins: [
+    new ProgressBarPlugin({
+      // format: chalk.blue.bold('build [:bar]') + chalk.green.bold(' :percent') + '(' + chalk.magenta(' :elapsed') + 'seconds)',
+      format: 'build' + chalk.green.bold(' [:bar]') + ' :percent (:elapsed seconds)',
+      clear: false,
+      width: 500,
+    }),
+    new FriendlyErrorsWebpackPlugin(),
     new webpack.DefinePlugin(defineEnv),
+    createHappyPlugin('happy-babel-js', [{
+      loader: 'babel-loader',
+      query: {}
+    }]),
+    // createHappyPlugin('happy-css', [{
+    //   loader: 'css-loader',
+    //   query: {
+    //     minimize: false,
+    //     importLoader: 1
+    //   }
+    // }, {
+    //   loader: 'postcss-loader',
+    //   query: {}
+    // }])
   ]
 }
