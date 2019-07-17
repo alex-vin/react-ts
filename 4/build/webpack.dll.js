@@ -6,7 +6,7 @@ module.exports = {
   mode:'production',
   entry: {
     // 还有redux 之类的也可以放进来
-    vendor: ['react', 'react-dom', 'react-router-dom']
+    vendor: ['react', 'react-dom', 'react-router-dom', 'redux', 'react-redux']
   },
   output: {
     filename: '[name].dll.[hash:8].js',

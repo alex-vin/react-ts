@@ -61,6 +61,7 @@ module.exports={
       //   [MiniCssExtractPlugin.loader, 'happypack/loader?id=happy-css'] :
       //   ['style-loader', 'happypack/loader?id=happy-css'],
       use: [
+        'thread-loader',
         config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader',
         {
           loader: 'css-loader',
